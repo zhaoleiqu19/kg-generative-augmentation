@@ -14,6 +14,12 @@ One entry per candidate. Append every batch. Each: gap · evidence (links) · wh
 - **Why not solved:** Diagnosis (stage 1) is the least-developed loop link for detection; per-image attribute slicing is too coarse for box-level failures, and the slice→spec handoff (stage 2) is essentially unaddressed.
 - **Demonstrable on anchor?** likely y — run GH-ESD/HiBug2-style instance slicing on an elevator detector; measure whether slices map to interpretable hard cases (door occlusion, low light, small scale).
 
+## G4 — The slice→spec bridge: auto-translate a diagnosed *detection* slice into a layout/region generation spec
+- **Gap:** Targeting is solved for classification (select misclassified / not-learned-early images) and controllable detection generation is mature (layout/region conditions), but **nobody connects them**: turning a grounded detection failure slice into an automatic layout/region spec — with a principled count — is unaddressed.
+- **Evidence:** [[huang2024-actgen-active-generation]] (misclassification→gen, image-level), [[nguyen2025-tada-targeted-augmentation]] (targeted subset +2.8%, image-level), [[chen2023-geodiffusion-geometric-control]] + [[zhu2025-recon-region-controllable]] (executable layout/region spec format for detection), [[stage2-state-of-the-art]] synthesis.
+- **Why not solved:** Selection criteria are all classification image-level; the spec-encoding work assumes a layout is *given* (from real annotations), not *derived from a diagnosis*. The two literatures don't meet.
+- **Demonstrable on anchor?** y — pipeline: GH-ESD/HiBug2 slice on elevator detector → emit GeoDiffusion/ReCon-style layout specs for the failing condition → generate with existing Flux pipeline → measure size-specific AP on the slice.
+
 ## G3 — Does generation close the *small/occluded* domain gap, and at what ratio/filtering?
 - **Gap:** Unclear which diffusion augmentation type + synthetic-to-real ratio + filtering (VLM-based?) actually improves mAP for small/occluded objects vs. hurts via artifacts.
 - **Evidence:** [[does-synthetic-data-help]] (helps: Azizi 64.96%→69.24% by fidelity, Ge detection ≈ real; hurts: Zhang bias amplification), [[alimisis2024-diffusion-augmentation-review]] (method menu, metrics), [[yang2023-ai-generated-images-data-source]] (cost/benefit), domain-gap term in [[glossary]].

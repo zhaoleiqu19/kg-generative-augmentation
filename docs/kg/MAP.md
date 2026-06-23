@@ -9,7 +9,7 @@ The whole tree as nested links. Updated every ingestion batch.
   - [[does-synthetic-data-help]]
 - 20 Loop (spine)
   - stage1 diagnosis — [[stage1-state-of-the-art]] ✅ filled (Phase 1)
-  - stage2 spec — [[stage2-state-of-the-art]] (stub)
+  - stage2 spec — [[stage2-state-of-the-art]] ✅ filled (Phase 2)
   - stage3 synthesis — [[stage3-state-of-the-art]] (stub)
   - stage4 close-loop — [[stage4-state-of-the-art]] (stub)
 - 30 Anchor task (elevator e-bike detection) — [[task-sota]] (stub)
@@ -26,6 +26,10 @@ The whole tree as nested links. Updated every ingestion batch.
   - [[zhang2026-gh-esd-instance-slice-discovery]]
   - [[chen2025-hibug2-error-slice-discovery]]
   - [[chegini2023-clip-diffusion-failure-mitigation]]
+  - [[huang2024-actgen-active-generation]]
+  - [[nguyen2025-tada-targeted-augmentation]]
+  - [[chen2023-geodiffusion-geometric-control]]
+  - [[zhu2025-recon-region-controllable]]
 
 > **Suspected weakest loop stage (provisional, after batch 1):** stage1 diagnosis. The
 > field has a rich stage-3 synthesis menu (diffusion methods) and one published
