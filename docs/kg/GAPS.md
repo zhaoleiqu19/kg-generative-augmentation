@@ -4,8 +4,8 @@ One entry per candidate. Append every batch. Each: gap · evidence (links) · wh
 
 ## G1 — Diagnosis-driven targeted augmentation for *detection* (not just classification)
 - **Gap:** The closed loop "diagnose failures → generate targeted data → filter → retrain" is demonstrated mainly on image **classification**; its transfer to **object detection** (per-object, per-attribute failures) is open.
-- **Evidence:** [[chegini2023-clip-diffusion-failure-mitigation]] (diagnose→diffusion-generate, ~21% on hard sub-pops, **classification**), [[ouyang2025-safefix-model-repair]] (classification-centric repair loop), [[generative-augmentation-landscape]] open questions.
-- **Why not solved:** The strongest end-to-end diagnose→generate→repair results (Chegini ~21%; SafeFix) are classification + spurious-correlation. Detection failures are localized (box-level, attribute-level), so failure attribution and the success metric (size-specific AP, not accuracy) differ from classification repair — the transfer is unproven.
+- **Evidence:** [[chegini2023-clip-diffusion-failure-mitigation]] (diagnose→diffusion-generate, ~21% on hard sub-pops, **classification**), [[ouyang2025-safefix-model-repair]] (classification-centric repair loop), [[stage4-state-of-the-art]] (the safeguards — accumulate/verify/active-loop — are all non-detection), [[generative-augmentation-landscape]] open questions.
+- **Why not solved:** The strongest end-to-end diagnose→generate→repair results (Chegini ~21%; SafeFix) are classification + spurious-correlation; the loop safeguards (Gerstgrasser, Yi, Kessler) are LM/VLM. **No published loop wires diagnosis→spec→synthesis→filtered-retrain for object detection.** Detection failures are localized (box-level), so attribution, the verifier, and the metric (size-specific AP) all differ from classification repair.
 - **Demonstrable on anchor?** likely y — elevator e-bike detection is a detection task with clear failure modes (occlusion at door, small scale).
 
 ## G2 — Detection-granularity, spatially-grounded failure diagnosis for small/occluded objects

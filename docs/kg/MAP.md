@@ -11,7 +11,7 @@ The whole tree as nested links. Updated every ingestion batch.
   - stage1 diagnosis — [[stage1-state-of-the-art]] ✅ filled (Phase 1)
   - stage2 spec — [[stage2-state-of-the-art]] ✅ filled (Phase 2)
   - stage3 synthesis — [[stage3-state-of-the-art]] ✅ filled (Phase 3)
-  - stage4 close-loop — [[stage4-state-of-the-art]] (stub)
+  - stage4 close-loop — [[stage4-state-of-the-art]] ✅ filled (Phase 4)
 - 30 Anchor task (elevator e-bike detection) — [[task-sota]] (stub)
 - 90 Papers
   - [[yang2023-ai-generated-images-data-source]]
@@ -34,9 +34,15 @@ The whole tree as nested links. Updated every ingestion batch.
   - [[tang2024-aerogen-remote-sensing-generation]]
   - [[zhao2023-xpaste-copy-paste]]
   - [[ruiz2022-dreambooth-subject-driven]]
+  - [[gerstgrasser2024-accumulate-avoid-collapse]]
+  - [[yi2025-escaping-collapse-verification]]
+  - [[kessler2025-active-synthetic-data]]
+  - [[liu2024-synthvlm-clipscore-filtering]]
 
-> **Suspected weakest loop stage (provisional, after batch 1):** stage1 diagnosis. The
-> field has a rich stage-3 synthesis menu (diffusion methods) and one published
-> closed-loop template (SafeFix), but failure *diagnosis at detection granularity*
-> (per-object/per-attribute, not per-image class) is the least-developed link. To
-> confirm in Phase 1.
+> **Weakest links (confirmed after Phases 1–4):** the upstream/integrative ones, not synthesis.
+> - **stage 3 synthesis is NOT the bottleneck** — mature, detection-ready, strong rare-class numbers.
+> - **stage 1 diagnosis** at *detection granularity* (per-object, grounded) is only just emerging (GH-ESD, HiBug2), unproven for small/occluded objects (→ G2).
+> - **stage 2 spec** — translating a diagnosed detection slice into a layout/region generation spec is essentially unbuilt (→ G4).
+> - **stage 4** safeguards exist but are non-detection; no end-to-end *detection* loop is published (→ G1), and the detection *verifier* + safe ratio/stop params are undefined (→ G3).
+>
+> Net: the contribution surface is the **diagnosis→spec bridge (G2+G4)** and **proving the whole loop end-to-end on the anchor (G1)**, with G3 supplying the measurements.
