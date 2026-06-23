@@ -62,3 +62,9 @@ def test_body_unverified_mention_does_not_block(tmp_path):
     note.write_text(note.read_text() + "\nmentions #unverified in prose\n")
     (tmp_path / "00-foundations" / "c.md").write_text("[[smith2024-foo]]\n")
     assert validate(tmp_path) == []
+
+def test_template_placeholder_links_ignored(tmp_path):
+    _scaffold(tmp_path)
+    (tmp_path / "_templates").mkdir()
+    (tmp_path / "_templates" / "concept-node.md").write_text("[[authorYEAR-name]]\n")
+    assert validate(tmp_path) == []
