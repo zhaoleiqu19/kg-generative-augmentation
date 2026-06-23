@@ -9,7 +9,13 @@ Key terms used across the knowledge tree for the diagnosis-driven synthetic augm
 
 **Domain gap** — The distribution mismatch between synthetic training data and real-world test data, often manifesting as degraded detection accuracy when a model trained on generated images is evaluated on camera footage.
 
-**Data-centric AI** — A methodology that prioritizes the quality and composition of the training dataset over model architecture changes as the primary lever for improving model performance.
+**Data-centric AI** — A methodology that prioritizes the quality and composition of the training dataset over model architecture changes as the primary lever for improving model performance. Organized by Zha et al. (2023) into three goals: training-data development, inference-data development, and data maintenance.
+
+**Failure attribution** — Diagnosing *why* a model errs by attributing systematic failures to specific, often underrepresented, semantic subpopulations or attributes (e.g. SafeFix; Ouyang et al. 2025). The diagnosis signal that drives targeted augmentation.
+
+**Targeted model repair** — Generating synthetic data aimed only at diagnosed failure cases (vs. blanket augmentation), then retraining; optionally filtering generations with a VLM for distribution/semantic consistency (Ouyang et al. 2025).
+
+**Small-object detection** — Detection of objects occupying few pixels; hard due to low resolution, occlusion, background interference, and class imbalance (Nikouei et al. 2025). Measured with size-specific AP. The anchor task's regime.
 
 **Diffusion model** — A class of generative model that learns to reverse a gradual noise-addition process; produces high-fidelity images from text prompts or geometric conditions, enabling layout-controlled synthetic data generation (e.g., GeoDiffusion).
 
@@ -22,6 +28,7 @@ Shared vocabulary ensures consistent use of terms across paper notes, concept no
 
 ## Key papers
 - [[yang2023-ai-generated-images-data-source]]
+- [[zha2023-data-centric-ai-survey]]
 
 ## Open questions
 - Where exactly is the domain gap largest for elevator e-bike detection (texture, lighting, viewpoint)?
