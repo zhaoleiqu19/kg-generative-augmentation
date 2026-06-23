@@ -47,7 +47,7 @@ def validate(root):
         url = fm.get("url", "")
         if url and not url.startswith("http"):
             errors.append(f"{p.name}: url must start with http (got '{url}')")
-        if "unverified" in fm.get("tags", "") or "#unverified" in text:
+        if "unverified" in fm.get("tags", ""):
             unverified.add(p.stem)
 
     for p in md:
