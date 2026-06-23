@@ -30,7 +30,7 @@ def validate(root):
         if not (root / home).exists():
             errors.append(f"{home} missing")
 
-    md = list(root.rglob("*.md"))
+    md = [p for p in root.rglob("*.md") if "_templates" not in p.parts]
     stems = {p.stem for p in md}
     unverified = set()
 
