@@ -16,7 +16,7 @@
 - `url` must start with `http` (a fetched, real source). No paper note without one.
 - Anti-hallucination: notes drafted from memory before fetching carry tag `unverified`; concept nodes (`00/10/20/30`) must never `[[link]]` an `unverified` paper.
 - Definition of done for the whole effort: `GAPS.md` holds 2-3 gaps that are (a) not already solved in the tree and (b) demonstrable on the elevator e-bike anchor task.
-- Every ingestion batch ends green: `python docs/kg/tools/validate_kg.py` exits 0, then commit.
+- Every ingestion batch ends green: `python3 docs/kg/tools/validate_kg.py` exits 0, then commit.
 
 ---
 
@@ -125,7 +125,7 @@ File `docs/kg/RUNBOOK.md`:
 4. Agent WebFetches each pick; drafts `90-papers/authorYEAR-name.md` from fetched text only.
 5. Agent updates the concept node, MAP.md (new [[link]]), appends any gap to GAPS.md.
 6. Agent reports: found N, fetched M, couldn't verify K.
-7. Run `python docs/kg/tools/validate_kg.py` → must exit 0. Commit.
+7. Run `python3 docs/kg/tools/validate_kg.py` → must exit 0. Commit.
 
 Guardrails: no note without a fetched http url; memory-only drafts tagged `unverified`; concept nodes never link unverified papers; every number carries its source.
 ```
@@ -324,7 +324,7 @@ git commit -m "feat(kg): add knowledge-tree validator with tests"
 
 - [ ] **Step 1: Run validator on the real (empty) tree**
 
-Run: `python docs/kg/tools/validate_kg.py`
+Run: `python3 docs/kg/tools/validate_kg.py`
 Expected: PASS (no papers yet, MAP/GAPS exist).
 
 - [ ] **Step 2: Add one real seed paper note**
@@ -341,7 +341,7 @@ Add the glossary and the seed paper under their branches in `docs/kg/MAP.md` as 
 
 - [ ] **Step 5: Run validator, verify green**
 
-Run: `python docs/kg/tools/validate_kg.py`
+Run: `python3 docs/kg/tools/validate_kg.py`
 Expected: `KG validation passed.`
 
 - [ ] **Step 6: Commit**
@@ -378,7 +378,7 @@ Update/create the matching `00-foundations` / `10-landscape` concept node, add `
 
 - [ ] **Step 4 (per batch): Validate & commit**
 
-Run: `python docs/kg/tools/validate_kg.py` → expect PASS.
+Run: `python3 docs/kg/tools/validate_kg.py` → expect PASS.
 ```bash
 git add docs/kg && git commit -m "kg(phase0): ingest <target> batch"
 ```
@@ -408,7 +408,7 @@ In the stage folder, create `state-of-the-art.md`: what's solved, what's open, k
 
 - [ ] **Step 3 (per stage): Validate & commit**
 
-Run: `python docs/kg/tools/validate_kg.py` → PASS.
+Run: `python3 docs/kg/tools/validate_kg.py` → PASS.
 ```bash
 git add docs/kg && git commit -m "kg(stageN): deep-dive synthesis + gaps"
 ```
@@ -442,7 +442,7 @@ Edit GAPS.md so the top section is exactly 2-3 gaps meeting both done-criteria. 
 
 - [ ] **Step 4: Validate & commit**
 
-Run: `python docs/kg/tools/validate_kg.py` → PASS.
+Run: `python3 docs/kg/tools/validate_kg.py` → PASS.
 ```bash
 git add docs/kg && git commit -m "kg(phase5): anchor-task gap shortlist"
 ```
