@@ -10,7 +10,7 @@ The whole tree as nested links. Updated every ingestion batch.
 - 20 Loop (spine)
   - stage1 diagnosis — [[stage1-state-of-the-art]] ✅ filled (Phase 1)
   - stage2 spec — [[stage2-state-of-the-art]] ✅ filled (Phase 2)
-  - stage3 synthesis — [[stage3-state-of-the-art]] (stub)
+  - stage3 synthesis — [[stage3-state-of-the-art]] ✅ filled (Phase 3)
   - stage4 close-loop — [[stage4-state-of-the-art]] (stub)
 - 30 Anchor task (elevator e-bike detection) — [[task-sota]] (stub)
 - 90 Papers
@@ -30,6 +30,10 @@ The whole tree as nested links. Updated every ingestion batch.
   - [[nguyen2025-tada-targeted-augmentation]]
   - [[chen2023-geodiffusion-geometric-control]]
   - [[zhu2025-recon-region-controllable]]
+  - [[zhu2024-odgen-detection-generation]]
+  - [[tang2024-aerogen-remote-sensing-generation]]
+  - [[zhao2023-xpaste-copy-paste]]
+  - [[ruiz2022-dreambooth-subject-driven]]
 
 > **Suspected weakest loop stage (provisional, after batch 1):** stage1 diagnosis. The
 > field has a rich stage-3 synthesis menu (diffusion methods) and one published

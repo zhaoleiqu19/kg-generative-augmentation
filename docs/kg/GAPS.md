@@ -22,6 +22,6 @@ One entry per candidate. Append every batch. Each: gap · evidence (links) · wh
 
 ## G3 — Does generation close the *small/occluded* domain gap, and at what ratio/filtering?
 - **Gap:** Unclear which diffusion augmentation type + synthetic-to-real ratio + filtering (VLM-based?) actually improves mAP for small/occluded objects vs. hurts via artifacts.
-- **Evidence:** [[does-synthetic-data-help]] (helps: Azizi 64.96%→69.24% by fidelity, Ge detection ≈ real; hurts: Zhang bias amplification), [[alimisis2024-diffusion-augmentation-review]] (method menu, metrics), [[yang2023-ai-generated-images-data-source]] (cost/benefit), domain-gap term in [[glossary]].
-- **Why not solved:** "Helps" results isolate classification (Azizi) or generic VOC/COCO detection (Ge); none isolate the **small/occluded** detection regime. Helps-vs-hurts is dataset- and ratio-specific and the small-object regime is under-studied.
+- **Evidence:** [[does-synthetic-data-help]] (helps: Azizi 64.96%→69.24% by fidelity, Ge detection ≈ real; hurts: Zhang bias amplification), [[stage3-state-of-the-art]] (ODGEN +25.3% mAP w/ occlusion; AeroGen rare-class +12.6–17.8%; X-Paste long-tail +6.8 box AP — all *adjacent* regimes), [[alimisis2024-diffusion-augmentation-review]] (method menu, metrics), domain-gap term in [[glossary]].
+- **Why not solved:** Strong gains exist for occlusion-aware (ODGEN), small remote-sensing (AeroGen), and long-tail (X-Paste) — but **none isolate the small + occluded + indoor-surveillance** regime of the anchor, and the helps→hurts ratio/filtering tipping point for it is unmeasured.
 - **Demonstrable on anchor?** y — directly measurable with the existing Flux pipeline + an elevator dataset (sweep synthetic-to-real ratio, measure size-specific AP).
