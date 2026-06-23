@@ -6,6 +6,7 @@ The whole tree as nested links. Updated every ingestion batch.
   - [[glossary]]
 - 10 Landscape (wide sweep)
   - [[generative-augmentation-landscape]]
+  - [[does-synthetic-data-help]]
 - 20 Loop (spine)
   - stage1 diagnosis
   - stage2 spec
@@ -18,6 +19,9 @@ The whole tree as nested links. Updated every ingestion batch.
   - [[alimisis2024-diffusion-augmentation-review]]
   - [[nikouei2025-small-object-detection-survey]]
   - [[ouyang2025-safefix-model-repair]]
+  - [[azizi2023-synthetic-data-improves-imagenet]]
+  - [[ge2023-text2image-for-detection]]
+  - [[zhang2024-generated-data-amplify-bias]]
 
 > **Suspected weakest loop stage (provisional, after batch 1):** stage1 diagnosis. The
 > field has a rich stage-3 synthesis menu (diffusion methods) and one published
