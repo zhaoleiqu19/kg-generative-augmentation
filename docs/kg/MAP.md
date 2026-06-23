@@ -8,11 +8,11 @@ The whole tree as nested links. Updated every ingestion batch.
   - [[generative-augmentation-landscape]]
   - [[does-synthetic-data-help]]
 - 20 Loop (spine)
-  - stage1 diagnosis
-  - stage2 spec
-  - stage3 synthesis
-  - stage4 close-loop
-- 30 Anchor task (elevator e-bike detection)
+  - stage1 diagnosis — [[state-of-the-art]] (stage1)
+  - stage2 spec — [[state-of-the-art]] (stage2)
+  - stage3 synthesis — [[state-of-the-art]] (stage3)
+  - stage4 close-loop — [[state-of-the-art]] (stage4)
+- 30 Anchor task (elevator e-bike detection) — [[task-sota]]
 - 90 Papers
   - [[yang2023-ai-generated-images-data-source]]
   - [[zha2023-data-centric-ai-survey]]
