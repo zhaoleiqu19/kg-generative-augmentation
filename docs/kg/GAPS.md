@@ -4,15 +4,15 @@ One entry per candidate. Append every batch. Each: gap · evidence (links) · wh
 
 ## G1 — Diagnosis-driven targeted augmentation for *detection* (not just classification)
 - **Gap:** The closed loop "diagnose failures → generate targeted data → filter → retrain" is demonstrated mainly on image **classification**; its transfer to **object detection** (per-object, per-attribute failures) is open.
-- **Evidence:** [[ouyang2025-safefix-model-repair]] (classification-centric repair loop), [[generative-augmentation-landscape]] open questions.
-- **Why not solved:** Detection failures are localized (box-level, attribute-level), so failure attribution and the success metric (size-specific AP, not accuracy) differ from classification repair.
+- **Evidence:** [[chegini2023-clip-diffusion-failure-mitigation]] (diagnose→diffusion-generate, ~21% on hard sub-pops, **classification**), [[ouyang2025-safefix-model-repair]] (classification-centric repair loop), [[generative-augmentation-landscape]] open questions.
+- **Why not solved:** The strongest end-to-end diagnose→generate→repair results (Chegini ~21%; SafeFix) are classification + spurious-correlation. Detection failures are localized (box-level, attribute-level), so failure attribution and the success metric (size-specific AP, not accuracy) differ from classification repair — the transfer is unproven.
 - **Demonstrable on anchor?** likely y — elevator e-bike detection is a detection task with clear failure modes (occlusion at door, small scale).
 
-## G2 — Detection-granularity failure diagnosis as the bottleneck
-- **Gap:** No standard way to attribute detection failures to specific semantic attributes (viewpoint, occlusion-by-door, lighting) to *drive* what to generate.
-- **Evidence:** [[nikouei2025-small-object-detection-survey]] (challenges: occlusion, class imbalance), [[ouyang2025-safefix-model-repair]] (attribution exists but at class level), MAP weakest-stage note.
-- **Why not solved:** Diagnosis (stage 1) is the least-developed loop link; most work jumps straight to synthesis (stage 3).
-- **Demonstrable on anchor?** unknown — needs an anchor dataset with attribute labels or a way to mine them.
+## G2 — Detection-granularity, spatially-grounded failure diagnosis for small/occluded objects
+- **Gap:** Slice discovery is mature for classification but only *just emerging* for instance-level detection, and not validated for the small/occluded regime. Two specific holes: (a) does grounded instance-level slicing work for *small* objects? (b) can a discovered detection slice be turned into a generation **spec** (stage 2), instead of triggering blanket retrain?
+- **Evidence:** [[eyuboglu2022-domino-slice-discovery]] (mature but classification-only), [[zhang2026-gh-esd-instance-slice-discovery]] (instance-level, P@10 0.73 vs 0.63 — newest, untested on small objects), [[chen2025-hibug2-error-slice-discovery]] (multi-task incl. detection; predicts slices beyond val set), [[nikouei2025-small-object-detection-survey]] (small-object challenges), [[stage1-state-of-the-art]] synthesis.
+- **Why not solved:** Diagnosis (stage 1) is the least-developed loop link for detection; per-image attribute slicing is too coarse for box-level failures, and the slice→spec handoff (stage 2) is essentially unaddressed.
+- **Demonstrable on anchor?** likely y — run GH-ESD/HiBug2-style instance slicing on an elevator detector; measure whether slices map to interpretable hard cases (door occlusion, low light, small scale).
 
 ## G3 — Does generation close the *small/occluded* domain gap, and at what ratio/filtering?
 - **Gap:** Unclear which diffusion augmentation type + synthetic-to-real ratio + filtering (VLM-based?) actually improves mAP for small/occluded objects vs. hurts via artifacts.

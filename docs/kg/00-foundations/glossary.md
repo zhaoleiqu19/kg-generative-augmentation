@@ -13,6 +13,8 @@ Key terms used across the knowledge tree for the diagnosis-driven synthetic augm
 
 **Failure attribution** — Diagnosing *why* a model errs by attributing systematic failures to specific, often underrepresented, semantic subpopulations or attributes (e.g. SafeFix; Ouyang et al. 2025). The diagnosis signal that drives targeted augmentation.
 
+**Error slice (slice discovery)** — A coherent subset of inputs on which a model systematically underperforms; slice discovery finds and names such slices in human-understandable terms (Eyuboglu et al. 2022, Domino). Two paradigms: *slice-then-tag* (cluster failures, then describe) and *tag-then-slice* (generate attributes/tags, then group). Instance-level (detection) slicing is emerging (Zhang et al. 2026, GH-ESD).
+
 **Targeted model repair** — Generating synthetic data aimed only at diagnosed failure cases (vs. blanket augmentation), then retraining; optionally filtering generations with a VLM for distribution/semantic consistency (Ouyang et al. 2025).
 
 **Small-object detection** — Detection of objects occupying few pixels; hard due to low resolution, occlusion, background interference, and class imbalance (Nikouei et al. 2025). Measured with size-specific AP. The anchor task's regime.
@@ -31,6 +33,7 @@ Shared vocabulary ensures consistent use of terms across paper notes, concept no
 ## Key papers
 - [[yang2023-ai-generated-images-data-source]]
 - [[zha2023-data-centric-ai-survey]]
+- [[eyuboglu2022-domino-slice-discovery]]
 
 ## Open questions
 - Where exactly is the domain gap largest for elevator e-bike detection (texture, lighting, viewpoint)?

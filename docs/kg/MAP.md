@@ -8,11 +8,11 @@ The whole tree as nested links. Updated every ingestion batch.
   - [[generative-augmentation-landscape]]
   - [[does-synthetic-data-help]]
 - 20 Loop (spine)
-  - stage1 diagnosis — [[state-of-the-art]] (stage1)
-  - stage2 spec — [[state-of-the-art]] (stage2)
-  - stage3 synthesis — [[state-of-the-art]] (stage3)
-  - stage4 close-loop — [[state-of-the-art]] (stage4)
-- 30 Anchor task (elevator e-bike detection) — [[task-sota]]
+  - stage1 diagnosis — [[stage1-state-of-the-art]] ✅ filled (Phase 1)
+  - stage2 spec — [[stage2-state-of-the-art]] (stub)
+  - stage3 synthesis — [[stage3-state-of-the-art]] (stub)
+  - stage4 close-loop — [[stage4-state-of-the-art]] (stub)
+- 30 Anchor task (elevator e-bike detection) — [[task-sota]] (stub)
 - 90 Papers
   - [[yang2023-ai-generated-images-data-source]]
   - [[zha2023-data-centric-ai-survey]]
@@ -22,6 +22,10 @@ The whole tree as nested links. Updated every ingestion batch.
   - [[azizi2023-synthetic-data-improves-imagenet]]
   - [[ge2023-text2image-for-detection]]
   - [[zhang2024-generated-data-amplify-bias]]
+  - [[eyuboglu2022-domino-slice-discovery]]
+  - [[zhang2026-gh-esd-instance-slice-discovery]]
+  - [[chen2025-hibug2-error-slice-discovery]]
+  - [[chegini2023-clip-diffusion-failure-mitigation]]
 
 > **Suspected weakest loop stage (provisional, after batch 1):** stage1 diagnosis. The
 > field has a rich stage-3 synthesis menu (diffusion methods) and one published
