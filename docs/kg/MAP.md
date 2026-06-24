@@ -7,6 +7,7 @@ The whole tree as nested links. Updated every ingestion batch.
 - 10 Landscape (wide sweep)
   - [[generative-augmentation-landscape]]
   - [[does-synthetic-data-help]]
+  - [[related-systems-whole-loop]] — prior-art whole-loop neighbors; the seam is open
 - 20 Loop (spine)
   - stage1 diagnosis — [[stage1-state-of-the-art]] ✅ filled (Phase 1)
   - stage2 spec — [[stage2-state-of-the-art]] ✅ filled (Phase 2)
@@ -38,6 +39,11 @@ The whole tree as nested links. Updated every ingestion batch.
   - [[yi2025-escaping-collapse-verification]]
   - [[kessler2025-active-synthetic-data]]
   - [[liu2024-synthvlm-clipscore-filtering]]
+  - [[yurt2025-ltda-drive-longtail]]
+  - [[petersen2025-scene-aware-location]]
+  - [[hong2024-galot-generative-active-learning]]
+  - [[girella2024-diag-indistribution-defect]]
+  - [[voetman2023-big-data-myth-detection]]
 
 > **Weakest links (confirmed after Phases 1–4):** the upstream/integrative ones, not synthesis.
 > - **stage 3 synthesis is NOT the bottleneck** — mature, detection-ready, strong rare-class numbers.

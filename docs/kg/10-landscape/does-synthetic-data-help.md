@@ -13,6 +13,9 @@ The whole project bets on generation improving a detector. That bet is only safe
 - [[ge2023-text2image-for-detection]] — **detection/segmentation**: detectors trained *solely* on composed synthetic data reach performance "comparable to real data" on VOC/COCO; synthetic+real does better. Cut-and-paste with auto boxes.
 - [[yang2023-ai-generated-images-data-source]] — synthetic ~47x cheaper per labeled image; cut-and-paste foreground synthesis gave the largest per-image detection gain in its comparison.
 
+### HELPS — but only near-parity (skeptic)
+- [[voetman2023-big-data-myth-detection]] — **detection**: detectors trained *solely* on fine-tuned-SD synthetic data reach near-parity with a real-data baseline (apple orchards, AP deviation **0.09–0.12**) — but on an easy, low-occlusion, single-class task with **manual** boxes. Reads as "replacement, not amplifier": blanket synthetic ≈ real, so gains require *targeting*.
+
 ### HURTS / LIMITS
 - [[zhang2024-generated-data-amplify-bias]] — feeding generated data back across generations (self-consuming loop) **amplifies subgroup bias**; fairness degrades even when accuracy may not. Argues against blanket/iterative augmentation.
 
