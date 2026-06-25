@@ -14,6 +14,7 @@ The whole tree as nested links. Updated every ingestion batch.
   - stage3 synthesis — [[stage3-state-of-the-art]] ✅ filled (Phase 3)
   - stage4 close-loop — [[stage4-state-of-the-art]] ✅ filled (Phase 4)
 - 30 Anchor task (elevator e-bike detection) — [[task-sota]] (stub)
+- 50 Alignment (NEW direction: diagnosis↔generation alignment) — see `50-alignment/README.md`; new views over the shared `90-papers/` atoms (Phase 0–4 views above are kept as history)
 - 90 Papers
   - [[yang2023-ai-generated-images-data-source]]
   - [[zha2023-data-centric-ai-survey]]
