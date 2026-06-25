@@ -13,13 +13,16 @@ The deliverable is `GAPS.md`. Its credibility rests on showing the closest exist
 - [[hong2024-galot-generative-active-learning]] — explicit **AL-criterion → generate** closed loop; **classification**, fully synthetic, text-pseudo-labels (no boxes).
 - [[ouyang2025-safefix-model-repair]] — diagnose→targeted-gen→VLM-filter→retrain; the published loop template, but **classification**-centric.
 - [[chegini2023-clip-diffusion-failure-mitigation]] — diagnose→diffusion-generate, ~21% on hard sub-populations; **classification**.
+- [[wang2024-detdiffusion-perception-aware]] — perception model's signal (P.A. loss + P.A. attr) feeds diffusion; **detection**, layout-guided SOTA on COCO. The alignment is *internal*, but steered by a **generic perception-aware loss, not a grounded per-slice diagnosis**, and one-shot (no re-diagnosis).
+- [[zarei2025-authentication-rare-failure-modes]] — failure-mode discovery → **adversarially guided** SD-inpainting on inverted environment masks; **detection** (AV). Diagnosis is *adversarial failure-induction*, not measured real-slice failure.
+- [[mital2024-xai-modify-synthetic-data]] — XAI saliency → human edits the 3D mesh → re-render; **detection**, +1.5 mAP50 from XAI-guided edits. But **rendered (not real) images** and **human-in-the-loop**, not an automated bridge.
 
 ### Placement / spec neighbors (the "where", relevant to G4)
 - [[petersen2025-scene-aware-location]] — learned **probabilistic location model** + inpainting; **+1.4 mAP** (2.8× a random-placement baseline). Placement from a scene prior, not from a diagnosis.
 - [[girella2024-diag-indistribution-defect]] — **human marks the region**, training-free in-distribution defect gen; **+18–28% AP** on KSDD2. The manual version of the slice→spec marker.
 
 ### Engines already in the tree (steered-by-given-layout detection generation)
-- [[zhu2024-odgen-detection-generation]] · [[chen2023-geodiffusion-geometric-control]] · [[zhu2025-recon-region-controllable]] · [[tang2024-aerogen-remote-sensing-generation]] · [[zhao2023-xpaste-copy-paste]]
+- [[zhu2024-odgen-detection-generation]] · [[chen2023-geodiffusion-geometric-control]] · [[zhu2025-recon-region-controllable]] · [[tang2024-aerogen-remote-sensing-generation]] · [[zhao2023-xpaste-copy-paste]] · [[zhang2023-diffusionengine-data-engine]] (single-stage image+box engine; +3.1 mAP COCO, but blanket-scale, not diagnosis-driven)
 
 ### Calibrating skeptics
 - [[voetman2023-big-data-myth-detection]] — fully-synthetic detection reaches *near-parity* (AP dev 0.09–0.12) on an easy task — replacement, not amplifier.
@@ -30,4 +33,4 @@ The deliverable is `GAPS.md`. Its credibility rests on showing the closest exist
 - Which neighbor's **filter** (LLM agent, VLM, CLIP) transfers to a detection verifier with a defined safe ratio/stop (→ G3)?
 
 ## Our take
-The loop exists *in pieces*: long-tail detection gen with an LLM filter (LTDA-Drive), a true AL→generate closed loop (GALOT), scene-aware placement + inpainting (Scene-Aware), human-region in-distribution gen (DIAG), and a classification repair template (SafeFix). **None couples a grounded per-object detection diagnosis to a controllable, occlusion-capable, real-image generator with a defined verifier.** That intersection is the seam — exactly the sharpened [[generative-augmentation-landscape]] G1 (whole loop for detection) feeding on G2/G4 (diagnosis→spec) and G3 (safe ratio/filter).
+The loop exists *in pieces*: long-tail detection gen with an LLM filter (LTDA-Drive), a true AL→generate closed loop (GALOT), scene-aware placement + inpainting (Scene-Aware), human-region in-distribution gen (DIAG), and a classification repair template (SafeFix). The newest detection neighbors get closer on the **alignment** axis — DetDiffusion folds the perceptive signal *into* generation, AUTHENTICATION inverts masks for region-controlled failure gen — but each substitutes a **generic / adversarial / human** signal for a *measured grounded per-slice* diagnosis (DetDiffusion = perception-aware loss, AUTHENTICATION = adversarial noise, Mital = XAI on rendered meshes). **None couples a grounded per-object detection diagnosis to a controllable, occlusion-capable, real-image generator with a defined verifier.** That intersection is the seam — exactly the sharpened [[generative-augmentation-landscape]] G1 (whole loop for detection) feeding on G2/G4 (diagnosis→spec) and G3 (safe ratio/filter).
