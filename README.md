@@ -10,9 +10,11 @@ The tree is a byproduct; the real deliverable is [`docs/kg/GAPS.md`](docs/kg/GAP
   - `MAP.md` — the tree as nested `[[wikilinks]]`
   - `GAPS.md` — running list of candidate research gaps
   - `RUNBOOK.md` — the per-batch ingestion procedure
-  - `00-foundations/` `10-landscape/` `20-loop/` `30-anchor-task/` — concept nodes
-  - `90-papers/` — one atomic note per paper
+  - `00-foundations/` `10-landscape/` `20-loop/` `30-anchor-task/` — Phase 0–4 concept nodes
+  - `90-papers/` — one atomic note per paper (single source of truth, shared by all views)
+  - `50-alignment/` — current direction: the diagnosis↔generation *alignment* thesis (new views that reference the `90-papers/` atoms, never copy them)
   - `tools/validate_kg.py` — the validator / test gate
+- `docs/zh/` — Chinese translation of the repo (showcase; English originals are authoritative)
 - `docs/superpowers/specs/` — design doc
 - `docs/superpowers/plans/` — implementation plan
 
