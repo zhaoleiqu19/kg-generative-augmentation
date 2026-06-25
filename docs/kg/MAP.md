@@ -2,6 +2,8 @@
 
 The whole tree as nested links. Updated every ingestion batch.
 
+> **Status:** this MAP is the **global index** of the whole tree and the complete list of `90-papers/` atoms. Sections **00–30** are the **Phase 0–4 record** (kept as history, still-valid analysis). The **current working direction** is **`50-alignment/`** (diagnosis↔generation alignment) — start at `50-alignment/README.md`.
+
 - 00 Foundations
   - [[glossary]]
 - 10 Landscape (wide sweep)
@@ -53,3 +55,5 @@ The whole tree as nested links. Updated every ingestion batch.
 > - **stage 4** safeguards exist but are non-detection; no end-to-end *detection* loop is published (→ G1), and the detection *verifier* + safe ratio/stop params are undefined (→ G3).
 >
 > Net: the contribution surface is the **diagnosis→spec bridge (G2+G4)** and **proving the whole loop end-to-end on the anchor (G1)**, with G3 supplying the measurements.
+>
+> *(This conclusion evolved into the **alignment thesis** — see `50-alignment/alignment-thesis.md`.)*

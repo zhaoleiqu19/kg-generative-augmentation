@@ -2,6 +2,8 @@
 
 One entry per candidate. Append every batch. Each: gap · evidence (links) · why-not-solved · demonstrable-on-anchor? (y/n/unknown).
 
+> **Status:** current **authoritative** gap list (the Phase 0–4 deliverable, still valid). The new framing's gaps will live in `50-alignment/alignment-gaps.md` and supersede this **after the wide surveys**; until then, **this file is authoritative**.
+
 ## G1 — Diagnosis-driven targeted augmentation for *detection* (not just classification)
 - **Gap:** The closed loop "diagnose failures → generate targeted data → filter → retrain" is demonstrated mainly on image **classification**; its transfer to **object detection** (per-object, per-attribute failures) is open.
 - **Evidence:** [[chegini2023-clip-diffusion-failure-mitigation]] (diagnose→diffusion-generate, ~21% on hard sub-pops, **classification**), [[ouyang2025-safefix-model-repair]] (classification-centric repair loop), [[stage4-state-of-the-art]] (the safeguards — accumulate/verify/active-loop — are all non-detection), [[related-systems-whole-loop]] (the closest neighbors mapped), [[generative-augmentation-landscape]] open questions.
