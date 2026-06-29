@@ -61,3 +61,14 @@ HiBug2 属性本就分 **主体物体 / 背景 / 全局** 三类,正好映射生
 1. **HiBug2 是图像级属性,非逐实例像素 grounding**:把切片级属性贴到具体框上是近似;若 recon 后拿不到实例级关联,这层近似要写明(GH-ESD 在此更干净)。
 2. **自由文本是软控制**:框位置硬约束,但"暗光/遮挡"属性是概率性影响,需多采样 + 过滤(参 [[zhao2023-xpaste-copy-paste]] 的 CLIP 过滤、[[yurt2025-ltda-drive-longtail]] 的 LLM 过滤)。
 3. **画质天花板**:InstanceDiffusion=SD1.5,暗光真实感弱于 3DIS-FLUX(Flux 底座)——若失败强依赖光照真实感,3DIS 可能更合适(横评要看)。
+
+## 7. 实测验证(2026-06-29,诊断半环 + grounding)
+
+诊断半环 + grounding 已端到端跑通(无需生成器、无需训练)。**数据 = COCO val2017 前 500 图子集**(代表性数字待全量 val2017 复跑);检测器 = torchvision 预训练 **Faster R-CNN R50-FPN**(COCO_V1,未微调);脚本/产物在仓库外 `/data1/qushiduo/diag_mvp/`。
+
+- **size-specific AP(pycocotools)**:AP@[.50:.95] all=0.419,**small=0.258**,medium=0.457,large=0.528 → 小目标最弱。
+- **TIDE dAP(吃 mAP 的误差)**:Loc=6.05、Miss=5.91 主导;Bkg=3.94、Cls=2.74、Both=1.15、Dupe=0.25;特类 FP=17.47 / FN=12.51。→ 失败轴 = **定位 + 漏检**,集中在小目标(印证 §3 数据流第一步的假设)。
+- **grounding(pycocotools)**:漏检+小目标实例 **698 / 1312 小目标 GT**,**小目标召回 ≈ 0.47**;漏检最多的类:person(115)、chair(42)、book(40)、cup(29)、bird(29)…
+- **生成规格产物**:`genspec_missed_small.json` = **183 张图**各带其漏检小目标的 `{bbox, caption:"a small <cat>"}` —— 正是生成器(InstanceDiffusion/3DIS/MIGC++)吃的逐实例输入形状。下一步把 HiBug2 的全局/物体属性拼到 caption 上,即成完整生成规格。
+
+> 工程备注:借用现成 `ovdeim_stage3` env(已含 torch2.6/torchvision0.21/pycocotools/cv2/matplotlib),只加装 seaborn/appdirs/tidecv;大文件下载(torchvision 权重、大 wheel)**必须不带代理**(代理对大体下载会 IncompleteRead)。详见会话记忆 hf-download-recipe。
