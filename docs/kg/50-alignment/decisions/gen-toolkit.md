@@ -9,7 +9,7 @@
 | **Flux.2-klein-4B** | 纯 T2I(不吃空间条件) | `/data1/qushiduo/models/flux2/FLUX.2-klein-4B` | `flux2`(py3.11/torch2.6) | 仅作前景素材/copy-paste |
 | **SDXL-Inpaint** | 区域 inpaint | `/data1/qushiduo/models/sdxl-inpaint` | `flux2`(diffusers 原生) | ✅ 验证可用(~4.6s/张) |
 | **GeoDiffusion** (COCO-Stuff 512) | 框/layout→检测图 | `/data1/qushiduo/models/geodiffusion-coco-stuff-512x512` | `geodiff` | ✅ 验证可用(多框含遮挡落位准) |
-| **InstanceDiffusion** | 逐实例 框/点/掩码 | 未下 | 未建 | ⏸ 已选,押后 |
+| **InstanceDiffusion** | 逐实例 框/点/掩码 + 自由文本 | `gen_tools/InstanceDiffusion/pretrained/instancediffusion_sd15.pth`(13.6G)+ SD1.5 base | `instdiff` | ✅ 验证可用(官方 demo + **电梯锚点 demo** 均跑通,2026-06-26) |
 
 - GeoDiffusion 代码:`/home/qushiduo/gen_tools/GeoDiffusion`(推理入口 `run_layout_to_image.py` / `utils.generation_utils`)。
 
@@ -17,6 +17,7 @@
 
 - **GeoDiffusion**:给"类别+归一化框"(类别须属 COCO-Stuff 词表;电动车→最近类 `motorcycle`),内部编码成带位置 token 的固定模板 prompt;**输入框≈输出 GT 框**,能渲染真实遮挡+正确深度序。**画质受 SD1.x 天花板**:in-distribution 街景/车辆好,**近景大人脸弱**(电梯人物场景会吃亏)。无自由文本真实感杠杆。
 - **SDXL-Inpaint**:把目标柔边画进背景指定 mask 区域,优于 copy-paste 硬接缝;**物体会略溢出 mask 框**,框非紧致 GT。
+- **InstanceDiffusion**:吃 全局 caption + **逐实例 `{bbox, caption}`(可选 mask)**;电梯锚点 demo(`demos/demo_elevator_ebike.json`:左电瓶车 + 中站立人 + 右**被遮挡**电瓶车)按 spec 落位渲染成功,含遮挡轴,画质受 SD1.5 限但室内 CCTV 场景可信。**待复核:输入 bbox 与渲染目标的贴合度**(决定能否直接当紧致 GT 出 COCO-json)。
 - **画质 vs 框正确性是核心权衡**:GeoDiffusion 强框弱画质;SDXL/Flux 强画质弱框。候选改进路线:**两阶段 = GeoDiffusion 定布局 → SDXL img2img 精修**(保框 + 提画质),待试。
 
 ## `geodiff` env 关键 pin(踩过坑)

@@ -36,7 +36,25 @@
 |---|---|---|---|
 | **GeoDiffusion**(COCO-512) | 框/layout→检测图;对齐**中**(box-only,无逐实例文本) | [[chen2023-geodiffusion-geometric-control]] | ✅ 本地验证可用(`geodiff` env;输入框≈输出 GT;画质受 SD1.x 限,近景大人脸弱) |
 | **SDXL-Inpaint** | 区域 inpaint;对齐**中** | —(工具,见 gen-toolkit.md) | ✅ 本地验证可用(`flux2` env;~4.6s/张;物体略溢出框) |
-| **InstanceDiffusion** | 逐实例 框/点/掩码+文本;对齐**高**(最接近缺口需要的接口) | [[wang2024-instancediffusion-instance-control]] | ⏸ env 未建(gen-toolkit 记权重亦未下;Task 7 复核) |
+| **InstanceDiffusion** | 逐实例 框/点/掩码+文本;对齐**高**(最接近缺口需要的接口) | [[wang2024-instancediffusion-instance-control]] | ✅ **验证可用**(`instdiff` env;官方 + 电梯锚点 demo 跑通,2026-06-26;见 [gen-toolkit.md](gen-toolkit.md)) |
 | **ODGEN** | object-wise 文本+视觉,含遮挡;对齐**高但需逐域微调**(域内 +25.3 mAP) | [[zhu2024-odgen-detection-generation]] | 未搭建 |
 
-> 选型逻辑预告(Task 7 执行):优先 **检测就绪 + 能处理小目标 + 现在能跑**,用**对齐**(控制接口能否直接消费 Task 6 的诊断输出)作平局决胜。若对齐最优者(如 InstanceDiffusion)未建,则记为 (a) Plan 2 前置的小型 build-probe,或 (b) 退回已验证模型(GeoDiffusion / SDXL-Inpaint)。
+## 4. Task 7:生成端按 5 条标准打分 + 决策(2026-06-29)
+
+打分:✅满足 / ◐部分 / ✗不满足。5 条标准见上表(能跑 · 对齐 · 粒度 · 失败模式(小/遮挡)· 检测就绪)。
+
+| 候选 | 1 能跑 | 2 对齐(核心) | 3 粒度 | 4 小/遮挡 | 5 检测就绪 | 小结 |
+|---|:--:|:--:|:--:|:--:|:--:|---|
+| **InstanceDiffusion** | ✅ 本地+锚点跑通 | ✅ 逐实例 框+文本=诊断语言 | ✅ 逐实例 | ✅ 电梯 demo 已现遮挡;小目标可控(SD1.5 画质顶) | ◐ 图+框;**框贴合度待复核**才能出紧致 GT | **胜出**:硬门槛全过,对齐+粒度最高 |
+| **GeoDiffusion** | ✅ 本地 | ◐ box-only,无逐实例文本 | ◐ 框级(无逐实例属性) | ✅ 输入框≈输出 GT,含遮挡深度序;近景大人脸弱 | ✅ 为检测造数据,框=GT | **兜底首选**:框正确性最稳 |
+| **SDXL-Inpaint** | ✅ 本地 | ◐ 区域 inpaint,非逐实例 spec | ◐ 区域级 | ◐ 真实图改区域;**物体溢出框,非紧致 GT** | ◐ 框需反检测 | 备选:强画质弱框 |
+| **ODGEN** | ✗ 未搭建 | ✅ 高(但需逐域微调) | ✅ object-wise | ✅ 多类+遮挡(域内 +25.3 mAP) | ✅ 检测向 | **淘汰**:卡在硬门槛 1(现在跑不了) |
+
+### 决策
+
+**选 [[wang2024-instancediffusion-instance-control]](InstanceDiffusion)作 MVP 生成器。**
+
+- **硬门槛全过**(1 能跑 / 4 小+遮挡 / 5 检测就绪◐),且 **对齐(2)与粒度(3)四者最高** —— 它的"逐实例 框+自由文本"接口正是 grounded 诊断切片会吐出的语言,使诊断→生成的桥最轻(直对 [../alignment-gaps.md](../alignment-gaps.md) 的缝)。已在**锚点电梯场景**跑通(含遮挡轴),不止 COCO。
+- **ODGEN 卡硬门槛 1 淘汰**(未搭建);SDXL-Inpaint 框不紧致,作画质备选。
+- **兜底 = GeoDiffusion**(已验证、框正确性最稳):若 InstanceDiffusion 的**输入 bbox↔渲染目标贴合度**复核不过关(无法直接出紧致 COCO-json GT),退回 GeoDiffusion 走 box-only 路线。
+- **遗留给 Plan 2 的一个前置检查**:量化 InstanceDiffusion 输出框的贴合度(IoU(输入框, 渲染目标)),决定是否需要一道"渲染后反检测校正框"的轻步骤。
