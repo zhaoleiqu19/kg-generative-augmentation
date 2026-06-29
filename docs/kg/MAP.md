@@ -17,6 +17,7 @@ The whole tree as nested links. Updated every ingestion batch.
   - stage4 close-loop — [[stage4-state-of-the-art]] ✅ filled (Phase 4)
 - 30 Anchor task (elevator e-bike detection) — [[task-sota]] (stub)
 - 50 Alignment (NEW direction: diagnosis↔generation alignment) — see `50-alignment/README.md`; new views over the shared `90-papers/` atoms (Phase 0–4 views above are kept as history)
+  - applicability table — `50-alignment/generality-map.md` (detection sub-scenarios × where diagnosis-driven aug applies; reads off COCO small-object as the MVP demo row)
 - 90 Papers
   - [[yang2023-ai-generated-images-data-source]]
   - [[zha2023-data-centric-ai-survey]]
