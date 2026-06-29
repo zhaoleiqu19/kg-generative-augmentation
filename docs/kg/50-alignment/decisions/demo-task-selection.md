@@ -26,9 +26,12 @@
 
 | 候选 | 表示 / 对齐就绪度 | 原子 | 当前状态 |
 |---|---|---|---|
-| **GH-ESD** | 实例级 grounded 切片;对齐就绪度**高**(最接近可直接当 spec) | [[zhang2026-gh-esd-instance-slice-discovery]] | 未 spike(Task 6 跑) |
-| **HiBug2** | 属性文本切片;对齐就绪度**中**;能预测验证集外切片 | [[chen2025-hibug2-error-slice-discovery]] | 未 spike(Task 6 跑) |
-| *兜底* | 无现成工具能跑时:**metric-based slicer**(per-size AP → 最差切片) | —(Plan 2 自建) | 限时盒到期则启用 |
+| **HiBug2** | 属性文本切片;对齐就绪度**中**;能预测验证集外切片 | [[chen2025-hibug2-error-slice-discovery]] | ✅ **开源** [cure-lab/HiBug2](https://github.com/cure-lab/HiBug2);**主候选,待实测**(输出 schema 需 recon) |
+| **TIDE**(互补) | 框级 6 类误差 + 各自 mAP 隔离贡献(选"哪类失败") | [[bolya2020-tide-detection-errors]] | ✅ **开源** [dbolya/tide](https://github.com/dbolya/tide)(pip `tidecv`);**待实测** |
+| **COCO 度量切片器**(互补) | per-size AP / 未匹配实例框 → grounded 失败框 | —(pycocotools 自建) | **待实测**;兼作兜底 |
+| GH-ESD | 实例级 grounded 切片;对齐就绪度**高** | [[zhang2026-gh-esd-instance-slice-discovery]] | ✗ **无官方代码出局**(数据集称录用后放,repo 未见;待放码再评) |
+
+> **诊断端:尚未敲定(2026-06-29)。** GH-ESD 对齐最优但无代码 → 出局(同 ODGEN)。当前**待验证的工作假设**:用全开源的 **HiBug2(属性切片)+ TIDE(选失败类型)+ COCO 度量切片器(取漏检框做 grounding)** 组合,DIY 出 GH-ESD 想要的 grounded 实例切片,直接喂生成器的 `{box, caption}` 接口。**三者尚未逐一上手实测**,需先 clone HiBug2 看输出 schema、跑通 TIDE/度量切片器后再决定是否成组采用——故此处只记录方向,不作最终决策。
 
 ### 生成端候选(状态由 Task 7 的选型回填;本地状态据 [gen-toolkit.md](gen-toolkit.md))
 
