@@ -36,6 +36,7 @@ The whole tree as nested links. Updated every ingestion batch.
   - [[chen2023-geodiffusion-geometric-control]]
   - [[zhu2025-recon-region-controllable]]
   - [[zhu2024-odgen-detection-generation]]
+  - [[zhou2024-3dis-depth-decoupled-instance]]
   - [[tang2024-aerogen-remote-sensing-generation]]
   - [[zhao2023-xpaste-copy-paste]]
   - [[ruiz2022-dreambooth-subject-driven]]

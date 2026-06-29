@@ -25,7 +25,8 @@
 
 ### ① 通用 box/layout→图 基座
 - ✅ **InstanceDiffusion**(Wang 2024, CVPR)—— 逐实例控制:每实例 **点/涂鸦/框/掩码 + 自由文本**;COCO 上框/掩码大幅超前 SOTA(~2.0×AP50 / ~1.7×IoU,数字待正文);UniFusion/ScaleU/Multi-instance Sampler。**【对齐就绪度:高】** 接口正是 grounded 逐实例诊断会吐出的语言。原子:[[wang2024-instancediffusion-instance-control]]
-- ✅ **MIGC++**(Zhou 2024, TPAMI)—— 多实例:**框&掩码定位 + 文本&图像属性**,divide-and-conquer 治**属性串味**,Consistent-MIG 保一致。**【对齐就绪度:高】** 多相似实例(多电瓶车/人)各保属性时更稳。原子:[[zhou2024-migcpp-multi-instance]]
+- ✅ **MIGC++**(Zhou 2024, TPAMI)—— 多实例:**框&掩码定位 + 文本&图像属性**,divide-and-conquer 治**属性串味**,Consistent-MIG 保一致。**【对齐就绪度:高】** 多相似实例(多电瓶车/人)各保属性时更稳。**开源**(github limuloo/MIGC,权重含 SD1.5/SD2/SDXL)。原子:[[zhou2024-migcpp-multi-instance]]
+- ✅ **3DIS / 3DIS-FLUX**(Zhou 2024/2025, ICLR2025 spotlight)—— **深度解耦**多实例:先出场景深度图定位 → ControlNet **免训练**渲染属性,可挂任意基座(SD2/SDXL/**Flux**)。**【对齐就绪度:高;遮挡 native + Flux 画质】** 开源(github limuloo/MIGC 同组)。原子:[[zhou2024-3dis-depth-decoupled-instance]]
 - 🌳 **GeoDiffusion**(框→图,**本地在手**,快 4×)—— box-only,无逐实例文本。**【对齐就绪度:中】** 原子:[[chen2023-geodiffusion-geometric-control]]
 - 🌳 **ODGEN**(object-wise 文本+视觉,能造多类+遮挡;域内 +25.3 mAP)。**【对齐就绪度:高,但需逐域微调】** 原子:[[zhu2024-odgen-detection-generation]]
 - 🌳 **DiffusionEngine**(单阶段产图+框)—— **自己造框**、盲扩规模。**【对齐就绪度:低】** 原子:[[zhang2023-diffusionengine-data-engine]]
@@ -57,7 +58,8 @@
 ## 本轮抓取台账(2026-06,框/layout 行)
 - **新建 4 篇**:InstanceDiffusion、MIGC++、OcclusionFormer、GenDet(后者标偏离本行)。
 - **纠错**:`2402.03040` 非 InstanceDiffusion(实为 InteractiveVideo);正确 id = `2402.03290`,已用。
-- **候选留作下批**:GLIGEN(`2301.07093`)、BoxDiff(`2307.10816`)、3DIS-flux(`2501.05131`)、TerraGen(`2510.21391`)、POCI-Diff(`2601.14056`)。
+- **已入库(本次补)**:3DIS / 3DIS-FLUX(`2410.12669` / `2501.05131`)——见上 ① 行。
+- **候选留作下批**:GLIGEN(`2301.07093`,开源+已并入 HF diffusers)、BoxDiff(`2307.10816`,免训练)、TerraGen(`2510.21391`)、POCI-Diff(`2601.14056`)。
 
 ## 下一步
 与 survey-diagnosis 框级行对账 → 回填 representation-map "框/layout" 行的交叉判定(见该文件)。
