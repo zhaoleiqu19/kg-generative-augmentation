@@ -2,3 +2,11 @@ __pycache__/
 *.pyc
 logs/
 outputs/
+
+# archived Flux/e-bike experiments (kept locally, not versioned)
+_archive/flux-experiments/
+
+# local-only, never commit (volatile session/audit artifacts + e-bike org-meeting slides)
+agent-debrief.md
+handoff.md
+组会分享.md

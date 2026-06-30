@@ -29,3 +29,4 @@
 | [decisions/gen-toolkit.md](decisions/gen-toolkit.md) | 本地生成工具链(模型/env/路径/下载配方) | 实测可用 |
 | [decisions/demo-task-selection.md](decisions/demo-task-selection.md) | 演示任务 + 组件选型(生成端暂定 InstDiff;诊断端待实测) | 进行中 |
 | [decisions/diagnosis-bridge.md](decisions/diagnosis-bridge.md) | 诊断→生成 轻桥设计(TIDE+pycocotools+HiBug2;caption 路由) | 设计/未敲定 |
+| [decisions/loop-mvp-pilot.md](decisions/loop-mvp-pilot.md) | loop_mvp 端到端试点:执行记录 + 红队复盘(val 泄漏/cascade/A/B 混淆等) | 进行中 |

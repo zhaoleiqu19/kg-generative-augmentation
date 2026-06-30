@@ -2,7 +2,7 @@
 
 One entry per candidate. Append every batch. Each: gap · evidence (links) · why-not-solved · demonstrable-on-anchor? (y/n/unknown).
 
-> **Status:** current **authoritative** gap list (the Phase 0–4 deliverable, still valid). The new framing's gaps will live in `50-alignment/alignment-gaps.md` and supersede this **after the wide surveys**; until then, **this file is authoritative**.
+> **Status:** **input, not deliverable.** Under the two-step plan (survey → pluggable tool), this is no longer a final shortlist but a **running list of open problems** that feeds the Step-1 survey and motivates the Step-2 tool. The new framing's gaps live in `50-alignment/alignment-gaps.md`. **The "demonstrable on anchor?" lines below are legacy** — the elevator e-bike anchor is dropped (archived); read them as "demonstrable on a detection benchmark."
 
 ## G1 — Diagnosis-driven targeted augmentation for *detection* (not just classification)
 - **Gap:** The closed loop "diagnose failures → generate targeted data → filter → retrain" is demonstrated mainly on image **classification**; its transfer to **object detection** (per-object, per-attribute failures) is open.

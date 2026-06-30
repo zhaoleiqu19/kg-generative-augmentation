@@ -4,9 +4,14 @@ Operating rules for working in this repo. See `README.md` for the public overvie
 
 ## What this repo is
 
-A **knowledge tree** for researching *diagnosis-driven generative data augmentation* for vision models. The tree (`docs/kg/`) is a byproduct; the real deliverable is **`docs/kg/GAPS.md`** — a shortlist of 2-3 research gaps that are (a) not already solved in the surveyed literature and (b) demonstrable on the **anchor task**: elevator CCTV detection of electric mopeds / e-bikes.
+A research workspace on *diagnosis-driven generative data augmentation* for vision models (find where a detector fails → synthesize exactly those cases → retrain → verify the gap closed). **Current plan = two steps:**
 
-It started as a knowledge tree (Phases 0–4 complete: wide sweep + the four loop stages, in `docs/kg/MAP.md` / `GAPS.md` / `00–30`). The **current direction** is the **diagnosis↔generation alignment** thesis, worked in **`docs/kg/50-alignment/`** (see its `README.md`): if a diagnosis method's output representation matches a generation method's control interface, the diagnosis→generation bridge stays lightweight — so survey diagnosis and generation *jointly* and map their shared representations.
+1. **Literature survey** — map the diagnosis + generative-augmentation field and establish *what is achievable today* (built on the `docs/kg/` tree + the `90-papers/` atoms).
+2. **A pluggable tool** — assemble existing components into a *detect → generate → train-augment* pipeline that measurably improves a detection model. The plugin interface = the **shared diagnosis↔generation representation** (the alignment thesis below).
+
+> **The elevator-CCTV e-bike anchor is dropped** (archived under `_archive/`). Don't scope new work to it. COCO / standard detection benchmarks are the working ground now.
+
+The repo began as a knowledge tree (Phases 0–4: wide sweep + the four loop stages, in `docs/kg/MAP.md` / `GAPS.md` / `00–20`; kept as history). The theoretical backbone is the **diagnosis↔generation alignment** thesis, worked in **`docs/kg/50-alignment/`** (see its `README.md`): if a diagnosis method's output representation matches a generation method's control interface, the bridge between them stays lightweight — which is exactly what makes the Step-2 tool pluggable. `GAPS.md` is now an **input** (open problems found while surveying), not the sole deliverable.
 
 ## The ingestion workflow (RUNBOOK)
 
@@ -32,7 +37,7 @@ All literature goes in one batch at a time, following `docs/kg/RUNBOOK.md`:
 
 ## Repo conventions
 
-- **Local-only, never commit/push:** `generate.py`, `batch_generate.py`, `gen_prom/`, `setup_env/` (Flux generation scripts). The repo is public; keep these untracked.
+- **Archived (local-only, never commit/push):** the early Flux generation scripts (`generate.py`, `batch_generate.py`, `gen_prom/`, `setup_env/`, outputs/logs) now live under `_archive/flux-experiments/` (gitignored); `组会分享.md` (e-bike org-meeting slides) stays untracked at root. The repo is public; keep these untracked.
 - `handoff.md` is volatile session state — untracked, never committed.
 - Work happens on `master`; commit each batch directly. Commit-message prefix: `kg(phaseN): ...` or `kg(stageN): ...`.
 - Commit/push only when the user asks.
@@ -41,7 +46,7 @@ All literature goes in one batch at a time, following `docs/kg/RUNBOOK.md`:
 
 - `docs/kg/MAP.md` — tree index (nested `[[wikilinks]]`); records the suspected weakest loop stage. Update every batch.
 - `docs/kg/GAPS.md` — the deliverable; running candidate-gap list.
-- `docs/kg/00-foundations/` `10-landscape/` `20-loop/` `30-anchor-task/` — Phase 0–4 concept nodes (kept as history).
+- `docs/kg/00-foundations/` `10-landscape/` `20-loop/` — Phase 0–4 concept nodes (kept as history). (`30-anchor-task/` archived to `_archive/kg/`.)
 - `docs/kg/90-papers/` — one atomic note per paper; **single source of truth**, shared by every view. New papers always land here (via RUNBOOK); other areas only `[[link]]` them.
 - `docs/kg/50-alignment/` — **current direction** (diagnosis↔generation alignment): new *view* docs (thesis, representation-map, surveys, gaps) + `decisions/gen-toolkit.md` (local GeoDiffusion/SDXL/Flux toolkit). References `90-papers/` atoms; never copies them.
 - `docs/zh/` — Chinese translation of the repo (showcase); English is authoritative, so update English first.

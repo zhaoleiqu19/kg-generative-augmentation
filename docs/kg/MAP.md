@@ -2,7 +2,7 @@
 
 The whole tree as nested links. Updated every ingestion batch.
 
-> **Status:** this MAP is the **global index** of the whole tree and the complete list of `90-papers/` atoms. Sections **00–30** are the **Phase 0–4 record** (kept as history, still-valid analysis). The **current working direction** is **`50-alignment/`** (diagnosis↔generation alignment) — start at `50-alignment/README.md`.
+> **Status:** this MAP is the **global index** of the whole tree and the complete list of `90-papers/` atoms. Sections **00–20** are the **Phase 0–4 record** (kept as history, still-valid analysis; the former `30-anchor-task/` is archived under `_archive/` — the elevator e-bike anchor is no longer the focus). The **current direction** is a two-step plan: **(1)** a literature survey of diagnosis-driven generative augmentation (what's achievable today), **(2)** a pluggable *detect → generate → retrain* augmentation tool. Theory backbone + working notes live in **`50-alignment/`** — start at `50-alignment/README.md`.
 
 - 00 Foundations
   - [[glossary]]
@@ -15,8 +15,8 @@ The whole tree as nested links. Updated every ingestion batch.
   - stage2 spec — [[stage2-state-of-the-art]] ✅ filled (Phase 2)
   - stage3 synthesis — [[stage3-state-of-the-art]] ✅ filled (Phase 3)
   - stage4 close-loop — [[stage4-state-of-the-art]] ✅ filled (Phase 4)
-- 30 Anchor task (elevator e-bike detection) — [[task-sota]] (stub)
-- 50 Alignment (NEW direction: diagnosis↔generation alignment) — see `50-alignment/README.md`; new views over the shared `90-papers/` atoms (Phase 0–4 views above are kept as history)
+- 30 Anchor task — *archived* (`_archive/kg/30-anchor-task/`; elevator e-bike anchor dropped)
+- 50 Alignment (current direction: diagnosis↔generation alignment) — see `50-alignment/README.md`; new views over the shared `90-papers/` atoms (Phase 0–4 views above are kept as history)
   - applicability table — `50-alignment/generality-map.md` (detection sub-scenarios × where diagnosis-driven aug applies; reads off COCO small-object as the MVP demo row)
   - diagnosis→generation bridge design — `50-alignment/decisions/diagnosis-bridge.md` (TIDE + pycocotools + HiBug2 → per-instance {box, caption}; HiBug2 attribute→caption routing)
 - 90 Papers
@@ -57,6 +57,6 @@ The whole tree as nested links. Updated every ingestion batch.
 > - **stage 2 spec** — translating a diagnosed detection slice into a layout/region generation spec is essentially unbuilt (→ G4).
 > - **stage 4** safeguards exist but are non-detection; no end-to-end *detection* loop is published (→ G1), and the detection *verifier* + safe ratio/stop params are undefined (→ G3).
 >
-> Net: the contribution surface is the **diagnosis→spec bridge (G2+G4)** and **proving the whole loop end-to-end on the anchor (G1)**, with G3 supplying the measurements.
+> Net: the contribution surface is the **diagnosis→spec bridge (G2+G4)** and **proving the whole loop end-to-end on a detection task (G1)**, with G3 supplying the measurements.
 >
 > *(This conclusion evolved into the **alignment thesis** — see `50-alignment/alignment-thesis.md`.)*
