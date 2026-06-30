@@ -21,11 +21,10 @@
 | 文件 | 内容 | 状态 |
 |---|---|---|
 | [alignment-thesis.md](alignment-thesis.md) | 主张 + 几条轴 + 纳入标准 + 原子/视图原则 | 草稿(思路已敲定) |
-| [representation-map.md](representation-map.md) | 诊断输出 × 生成输入 对齐表 | 起步(含已有原子) |
-| [survey-diagnosis.md](survey-diagnosis.md) | 诊断方向宽调研(按表示标签组织) | 待搜索后填 |
-| [survey-generation.md](survey-generation.md) | 生成方向宽调研(按表示标签组织) | 待搜索后填 |
-| [alignment-gaps.md](alignment-gaps.md) | 新框架下的缺口(诊断→生成桥是缝) | 已写 |
-| [generality-map.md](generality-map.md) | 检测子场景 × 适用性;读出 COCO 小目标为演示行 | 已写 |
+| [representation-map.md](representation-map.md) | 诊断输出 × 生成输入 对齐表 + 失败类型×生成复杂度菜单 | 起步(含已有原子) |
+| [survey.md](survey.md) | 宽调研:诊断端 × 生成端(按表示标签组织,框级行已填) | 已填框级行 |
+| [whole-loop-candidates.md](whole-loop-candidates.md) | 整环系统级近邻(诊断→生成→过滤→重训 转完整的那些) | 已写 |
+| [alignment-gaps.md](alignment-gaps.md) | 新框架下的缺口(诊断→生成桥是缝)+ 适用性表(原 generality-map 并入) | 已写 |
 | [decisions/gen-toolkit.md](decisions/gen-toolkit.md) | 本地生成工具链(模型/env/路径/下载配方) | 实测可用 |
 | [decisions/demo-task-selection.md](decisions/demo-task-selection.md) | 演示任务 + 组件选型(生成端暂定 InstDiff;诊断端待实测) | 进行中 |
 | [decisions/diagnosis-bridge.md](decisions/diagnosis-bridge.md) | 诊断→生成 轻桥设计(TIDE+pycocotools+HiBug2;caption 路由) | 设计/未敲定 |

@@ -1,11 +1,11 @@
 # 决策:演示任务 + 组件选型(demo-task-selection)
 
 > 状态:**criteria + 候选清单已写(2026-06-29,Task 5)**;诊断/生成的最终选定由 Task 6(诊断 spike)/ Task 7(生成选型)回填,Task 8 加"决策摘要"块收口。
-> 这是 Plan 1 的最终输出,被 Plan 2(MVP 搭建)直接消费。依据:[../alignment-gaps.md](../alignment-gaps.md)(对齐缺口)+ [../generality-map.md](../generality-map.md)(选 COCO 小目标行)+ [gen-toolkit.md](gen-toolkit.md)(本地已验证工具)。
+> 这是 Plan 1 的最终输出,被 Plan 2(MVP 搭建)直接消费。依据:[../alignment-gaps.md](../alignment-gaps.md)(对齐缺口 + §6 适用性表,选 COCO 小目标行)+ [gen-toolkit.md](gen-toolkit.md)(本地已验证工具)。
 
 ## 1. 已固定的决策(不再讨论)
 
-- **演示任务 = COCO 小子集的"小目标"切片**(small-object slice)。理由见 [../generality-map.md](../generality-map.md) 的读出结论:最低风险代表行,有现成 size-specific AP 度量镜,所有候选生成器都在 COCO/类似规模验证过,且承载锚点核心难点。
+- **演示任务 = COCO 小子集的"小目标"切片**(small-object slice)。理由见 [../alignment-gaps.md](../alignment-gaps.md) §6 适用性表:最低风险代表行,有现成 size-specific AP 度量镜,所有候选生成器都在 COCO/类似规模验证过。
 - **成功标准 = 闭环跑通 + 结果可解释**;**up / flat / down 都算有效**(不是"必须涨点")。闭环靠"重新诊断"闭合,所以诊断输出必须可重复测量。
 - **不做新方法**:不设计新架构、不自研新算法(一个月预算)。全部用现成组件组装。
 - **对齐为平局决胜,不是唯一标准**(见 [../alignment-thesis.md](../alignment-thesis.md)):别为了好对齐选弱诊断/弱生成。

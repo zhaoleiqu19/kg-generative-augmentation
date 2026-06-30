@@ -59,7 +59,7 @@
 
 ## 框级行交叉判定(已调研两端,2026-06)
 
-> 详见 [survey-diagnosis.md](survey-diagnosis.md) 框级行 + [survey-generation.md](survey-generation.md) 框/layout 行。
+> 详见 [survey.md](survey.md) 的诊断端框级行 + 生成端框/layout 行。
 
 - **生成端**(消费侧)**已成熟**:InstanceDiffusion / MIGC++ 吃"逐实例 框/掩码 + 属性",OcclusionFormer 补"遮挡 Z-order",GeoDiffusion 本地可跑。接口正是 grounded 诊断会吐出的语言。
 - **诊断端**(产出侧)**词汇有、grounding 偏少**:TIDE/Hoiem 给框级误差词汇(但 dataset 级聚合),GH-ESD 给实例级 grounded 切片(最接近规格),HiBug2 给属性文本切片;FN-Mechanisms/KGFP 更像触发器/验证器。

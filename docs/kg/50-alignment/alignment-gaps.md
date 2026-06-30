@@ -1,6 +1,6 @@
 # 对齐缺口(alignment-gaps)
 
-> 状态:**已写(2026-06-29,框级行宽调研后)**。本文件 refine 旧 `GAPS.md` 的 G1–G4,**不覆盖**旧文件(旧文件留作 Phase 0–4 记录)。证据来自 [survey-diagnosis.md](survey-diagnosis.md) / [survey-generation.md](survey-generation.md) / [representation-map.md](representation-map.md) 的框级行交叉判定。纳入与加权口径见 [alignment-thesis.md](alignment-thesis.md) 的"纳入标准"。
+> 状态:**已写(2026-06-29,框级行宽调研后)**。本文件 refine 旧 `GAPS.md` 的 G1–G4,**不覆盖**旧文件(旧文件留作 Phase 0–4 记录)。证据来自 [survey.md](survey.md) / [representation-map.md](representation-map.md) 的框级行交叉判定。纳入与加权口径见 [alignment-thesis.md](alignment-thesis.md) 的"纳入标准"。
 
 ## 1. 一句话缺口
 
@@ -46,4 +46,18 @@
 - 旧 **G1**(检测端到端闭环)+ **G2**(检测粒度诊断)+ **G4**(切片→spec 桥)→ 收敛为本文件的**一条"对齐接口"缺口**(§1):让诊断输出的失败表示直接成为生成控制条件,从而轻量地闭合 诊断→生成→重训→**重新诊断** 的检测闭环。闭环靠"重新诊断"闭合,所以诊断输出还须是**可重复测量**的。
 - 旧 **G3**(小/遮挡/域差的安全比例 / 过滤)→ **保留为度量侧子问题**:KGFP 式触发器/验证器([[zimmermann2026-knowledge-guided-failure-prediction]])适合做这一侧的过滤闸。
 
-> 候选缺口可演示性:框级"诊断切片→逐实例 spec"桥可在 COCO 小目标切片上演示(最低生成风险),再迁移到锚点(电梯 CCTV 电瓶车)。详见后续 [generality-map.md](generality-map.md) 与 [decisions/demo-task-selection.md](decisions/demo-task-selection.md)。
+> 候选缺口可演示性:框级"诊断切片→逐实例 spec"桥可在 **COCO 小目标切片**上演示(最低生成风险)。演示任务选型见 [decisions/demo-task-selection.md](decisions/demo-task-selection.md)。
+
+## 6. 适用性(这套缝在哪些检测子场景成立)
+
+> 原 `generality-map.md` 并入。读法:**通用/盲增强已有增益**(很多)vs **诊断驱动(实测切片牵引)增益**(几乎没有,正是 §1 的缝)。数字均标来源,只引 `../90-papers/` 原子。
+
+| 检测子场景 | 主要失败模式 | 增强增益(✓通用已报 / ✗诊断驱动尚无) | 哪个生成器覆盖 | 证据强度 |
+|---|---|---|---|---|
+| **通用 COCO 式** | 类混淆/定位/重复/背景(TIDE 六类) | ✓ layout 控制提升下游检测:[[wang2024-detdiffusion-perception-aware]]、[[wang2024-instancediffusion-instance-control]];✗ 无"按实测切片"驱动 | GeoDiffusion / DetDiffusion / InstanceDiffusion / MIGC++ | **强** |
+| **小目标** | 低分辨率/背景干扰/类不均衡(size-specific AP 量) | ✓ [[nikouei2025-small-object-detection-survey]] 确认挑战与口径;copy-paste [[zhao2023-xpaste-copy-paste]](LVIS +2.6 box AP);✗ 无诊断驱动小目标切片→生成 | GeoDiffusion(本地)/ ODGEN / X-Paste 式 | **中-强** |
+| **遮挡 / 拥挤** | 漏检、深度序错、属性串味 | ✓ 生成端能渲染遮挡:[[li2026-occlusionformer-zorder]]、[[zhu2024-odgen-detection-generation]](域内 +25.3 mAP)、[[zhou2024-migcpp-multi-instance]];✗ 无"实测遮挡切片→spec" | OcclusionFormer / ODGEN / MIGC++ | **中-强** |
+| **长尾 / 稀有类** | 尾类样本稀缺 | ✓ [[yurt2025-ltda-drive-longtail]](KITTI 尾类 +34.75%)、[[zhao2023-xpaste-copy-paste]](LVIS 稀有 +6.8 box AP);✗ 多为盲长尾/对抗 | LTDA-Drive 式 / X-Paste | **中** |
+| **域漂移** | benchmark≠部署、跨域漏检 | ✓ 触发/验证证据:[[miller2022-false-negative-mechanisms]]、[[zimmermann2026-knowledge-guided-failure-prediction]](person recall 64.3%→84.5%);✗ 无"测出域差切片→定向生成补" | (诊断侧为主;生成补待接) | **中** |
+
+> 跨行共同事实:**"定向 beats 盲增"** 有量化支撑——[[nguyen2025-tada-targeted-augmentation]] 只增强 30–40% 的"难学子集"即 +2.8%(分类,需在检测上按 size-specific AP 重测)。这正是诊断驱动闭环应**按切片下规格、而非洪水式造数据**的依据。
