@@ -6,6 +6,10 @@ outputs/
 # archived Flux/e-bike experiments (kept locally, not versioned)
 _archive/flux-experiments/
 
+# off-repo MVP work moved in-tree (scripts + preds + generated imgs; local-only, never commit)
+diag_mvp/
+loop_mvp/
+
 # local-only, never commit (volatile session/audit artifacts + e-bike org-meeting slides)
 agent-debrief.md
 handoff.md

@@ -32,15 +32,15 @@
 
 ## 4. HiBug2 属性 → 两层 caption 的路由(关键对接点)
 
-HiBug2 属性本就分 **主体物体 / 背景 / 全局** 三类,正好映射生成器的两层输入:
+**已核实(2026-07-01,对 repo `cure-lab/HiBug2` 的 `prompts/get_base_attrs.py` + `get_aux_tags.py`):HiBug2 的属性 type 只有两类——`main object` / `background`**(prompt 原文:"attribute type: `main object` or `background`";全仓 grep 无 `global` 类)。每条属性再带一个 selection type `single | multi | binary`。**先前笔记里"main-object / background / global 三类(含 resolution/noise/brightness/camera-angle)的说法是错的、无 repo 依据,已更正**(见 [[chen2025-hibug2-error-slice-discovery]] 同步订正)。两类正好映射生成器的两层输入:
 
-| HiBug2 属性类 | 例子 | 路由到 |
+| HiBug2 属性 type | 例子(repo 实测 tag) | 路由到 |
 |---|---|---|
-| **全局**(光照、视角、天气) | 暗光、CCTV 视角 | → **全局 caption** |
-| **背景** | 杂乱背景、电梯内 | → **全局 caption** |
-| **主体物体**(颜色/姿态/遮挡/尺寸) | 小、被遮挡、深色 | → **逐实例 caption** |
+| **background** | `single, background, background lighting`(暗光)、杂乱背景、`dominant background color` | → **全局 caption** |
+| **main object** | `single, main object, object size`(小)、`object color`(深色)、形状/姿态/可见性/遮挡 | → **逐实例 caption** |
 
-已验证:InstanceDiffusion 的电梯 demo 全局 caption 含 "bright fluorescent ceiling light, CCTV view",光照/视角确被渲染。
+> 光照在 HiBug2 里是 **background 属性**(如 `background lighting`,见 `merge_attrs.py` 示例),不是单独的"全局"类;路由到全局 caption。
+> 旁证:InstanceDiffusion 电梯 demo 的全局 caption 含 "bright fluorescent ceiling light, CCTV view",光照确被渲染——但"CCTV 视角"这类**不是** HiBug2 原生属性名,别当它的输出写。
 
 **重要分水岭——只有自由文本接口的生成器能吃属性:**
 
@@ -50,6 +50,61 @@ HiBug2 属性本就分 **主体物体 / 背景 / 全局** 三类,正好映射生
 | **GeoDiffusion**([[chen2023-geodiffusion-geometric-control]]) | ❌ box-only,固定模板,类别限 COCO-Stuff 词表 | ❌ |
 
 → **HiBug2 属性增强这条路线只在 InstanceDiffusion / MIGC++ / 3DIS 上成立;GeoDiffusion 上失效**(它只能摆框,控不了光照/背景)。
+
+## 4b. genspec 的两层格式 + 字段来源(已对源码核实,2026-07-01)
+
+诊断结果分**两层**:第 1 层是三件诊断工具的并集(富记录),桥把它塌成第 2 层(生成器真正吃的输入)。
+
+### 第 1 层 — 组合诊断结果(每图一条)
+
+```json
+{
+  "image_id": 367680, "file_name": "000000367680.jpg",
+  "width": 640, "height": 480,
+  "scene_attrs": { "background lighting": "low_light", "background": "cluttered" },
+  "annos": [
+    { "bbox": [140.6,148.8,33.5,60.1], "category_id": 19, "category_name": "horse",
+      "size_bucket": "small", "tide_error": "Miss", "max_iou": 0.0,
+      "obj_attrs": { "occlusion": "partially_occluded", "object color": "dark" } }
+  ]
+}
+```
+
+**字段来源表(每个字段谁产出,均有据):**
+
+| 字段 | 来源 | 依据 |
+|---|---|---|
+| `bbox`(像素 **xywh**)、`category_id`、`size_bucket`、`max_iou` | **pycocotools** | 现有 `diag_mvp/slice_missed_small.json` 实产;size 档=COCO area<32² |
+| `tide_error`(Miss/Loc/…) | **按 TIDE 阈值从 `max_iou` 推**(iou≤tb=0.1→Miss/Bkg;tb≤iou≤tf=0.5→Loc) | TIDE 六类定义见 [[bolya2020-tide-detection-errors]]。**注:TIDE 本体只出数据集级 dAP;逐实例标签是我们按其口径复算的,不是 TIDE 直接产物** |
+| `scene_attrs`(background 类)、`obj_attrs`(main object 类) | **HiBug2** | type 仅 `main object`/`background`,见 §4(repo 核实) |
+
+### 第 2 层 — InstanceDiffusion 输入(桥的产物)
+
+**已对 `gen_tools/InstanceDiffusion/inference.py` 核实(2026-07-01)**,它只读这些键:
+
+```json
+{
+  "caption": "a cluttered indoor scene, low light; a small dark horse",
+  "width": 640, "height": 427,
+  "annos": [
+    { "bbox": [140.6,148.8,33.5,60.1], "mask": [], "category_name": "horse",
+      "caption": "a small dark partially-occluded horse" }
+  ]
+}
+```
+
+| 键 | 是否被生成器使用 | 源码依据(inference.py) |
+|---|---|---|
+| `caption`(顶层全局) | ✅ 用作 prompt | `prompt = data['caption']`(L199) |
+| `width` / `height` | ✅ 用于把 box 归一化 | `rescale_box(box, width, height)`(L239) |
+| `annos[].bbox` = **xywh** | ✅ 必填 | `rescale_box`:`x1=x0+bbox[2]`(L132–137)→ 证明是 `[x,y,w,h]` |
+| `annos[].caption`(逐实例) | ✅ | `instance_captions.append(...)`(L231) |
+| `annos[].mask` | 可选,`[]` 即无 | L202 |
+| `annos[].category_name` | ⚠️ **被读但注释掉、不参与生成** | L230 `# class_names.append(...)` |
+
+> 关键:**`category_name` 不影响生成**——它只为我们自己回填合成 GT 的类别标签用;别声称它驱动生成。box 用像素 xywh、直接放原图尺寸即可(width/height 缺省则内部当 512)。
+
+**桥的映射** = 第1层→第2层:`obj_attrs`+size+类别 → 拼 `annos[].caption`;`scene_attrs` → 拼顶层 `caption`;`bbox/width/height` 直接搬;`category_id` 另存去建训练用合成 GT。
 
 ## 5. 两步走(降风险)
 
@@ -64,7 +119,7 @@ HiBug2 属性本就分 **主体物体 / 背景 / 全局** 三类,正好映射生
 
 ## 7. 实测验证(2026-06-29,诊断半环 + grounding)
 
-诊断半环 + grounding 已端到端跑通(无需生成器、无需训练)。**数据 = COCO val2017 前 500 图子集**(代表性数字待全量 val2017 复跑);检测器 = torchvision 预训练 **Faster R-CNN R50-FPN**(COCO_V1,未微调);脚本/产物在仓库外 `/data1/qushiduo/diag_mvp/`。
+诊断半环 + grounding 已端到端跑通(无需生成器、无需训练)。**数据 = COCO val2017 前 500 图子集**(代表性数字待全量 val2017 复跑);检测器 = torchvision 预训练 **Faster R-CNN R50-FPN**(COCO_V1,未微调);脚本/产物在 `diag_mvp/`(repo 内、但 `.gitignore`,不入 git;2026-06-30 由 `/data1` 迁入)。
 
 - **size-specific AP(pycocotools)**:AP@[.50:.95] all=0.419,**small=0.258**,medium=0.457,large=0.528 → 小目标最弱。
 - **TIDE dAP(吃 mAP 的误差)**:Loc=6.05、Miss=5.91 主导;Bkg=3.94、Cls=2.74、Both=1.15、Dupe=0.25;特类 FP=17.47 / FN=12.51。→ 失败轴 = **定位 + 漏检**,集中在小目标(印证 §3 数据流第一步的假设)。

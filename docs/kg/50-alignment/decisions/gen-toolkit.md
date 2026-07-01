@@ -36,6 +36,35 @@
 - **桥接成本**:InstanceDiffusion 的入口 ≈ 诊断输出语言(零转换),是 alignment 论点的活证据;MIGC/3DIS 需一次性坐标换算 + 批量脚本。**注**:`genspec` 缺 InstanceDiffusion 需要的顶层全局 caption 与 `width/height`(后者可从 `gt_subset.json` 取),跑 loop 时需补一个 adapter。
 - **3DIS 的 `git status` 不可信**:因 blob:none + 手工逐文件抓,会把存在的文件假报为 `deleted`;判断文件是否存在用 `ls`/`find`,别信 `git status`。
 
+## 显存参考(VRAM,2026-07-01)
+
+**卡 = 10× RTX 4090 D,单卡 24 GB(sm_89)。24 GB 是一切选型的天花板。**
+
+**已用模型(实测/记录):**
+
+| 模型 | 底座 | 推理显存 | 出处 |
+|---|---|---|---|
+| MIGC | SD1.4 | **~6 GB** | 记录 |
+| InstanceDiffusion(base) | SD1.5 | **~13.6 GB 实测**(nvidia-smi;因 ckpt 是 **fp32**,fp16 载入约 ~7 GB);**开 refiner 后 ~16 GB+** | 实测 + 记忆 |
+| SDXL-Inpaint | SDXL | ~10–12 GB(未单测,SDXL 档) | 推断 |
+| GeoDiffusion | SD1.x | ~6–8 GB(未单测) | 推断 |
+| Flux.2-klein-4B | 4B DiT | 可跑进 24 GB | 已用 |
+
+> InstanceDiffusion 的 13.6 GB 偏高是 **fp32 权重**所致,非架构重;SD1.x 档 fp16 其实很轻(~6–7 GB)。
+
+**按底座推断(fp16、512–1024px、batch 1、无 offload):**
+
+| 底座 | 推理显存 | 对应框控模型 | 24 GB 卡 |
+|---|---|---|---|
+| SD1.x(0.86B) | ~6–10 GB | GLIGEN、BoxDiff、**MIGC / MIGC++(均 SD1.4)** | ✅ 轻松(但画质=InstDiff 同档,救不了天花板) |
+| SDXL(2.6B) | ~10–14 GB | MIGC++ 若换 SDXL 底座(需自备,官方未提供) | ✅ 宽裕 |
+| SD3-medium(2B) | ~12–18 GB | **CreatiLayout(SD3 变体)** | ✅ 装得下 |
+| FLUX.1-dev(12B) | **~24–32 GB** | **EliGen、CreatiLayout-FLUX、3DIS-FLUX、Laytrol** | ⚠️ 到顶/超顶 → **需 fp8/nf4 量化或 CPU-offload**(量化后 ~15–20 GB) |
+
+> 选型结论:**画质升级(FLUX)恰好卡在 24 GB 上沿**,4090 上要量化才进得去(同 3DIS-FLUX 的坑);**CreatiLayout-SD3(~12–18 GB)是最稳的画质提升**;GLIGEN/BoxDiff/MIGC 系都是 SD1.x,救不了小目标/画质天花板。实际显存还随分辨率/attention 实现(xformers/flash)/offload 变化,精确值须实跑。
+
+**MIGC++ 现状订正(2026-07-01,查盘):** 本地只有 `MIGC_SD14.ckpt`(MIGC,SD1.4);**MIGC++ 只有代码、权重 `MIGC++_SD14.ckpt` 未下载**(脚本 assert 提示下载),且 **MIGC++ 也是 SD1.4 底座 → 非画质升级**。survey.md 里"MIGC++ 权重含 SD1.5/SD2/SDXL"的说法**待核实/疑似有误**(官方 repo 只发 SD1.4 版)。
+
 ## `geodiff` env 关键 pin(踩过坑)
 
 py3.9 + torch==2.0.1(PyPI cu117 轮子,靠 PTX JIT 在 4090/sm_89 上跑)+ numpy==1.26.4 + diffusers==0.16.0(GeoDiffusion 硬断言)+ transformers==4.25.1 + huggingface_hub==0.16.4(diffusers0.16 需 `cached_download`)+ accelerate==0.16.0 + ftfy + bbox_visualizer + opencv-python。
